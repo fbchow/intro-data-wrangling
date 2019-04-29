@@ -13,23 +13,39 @@ library(tidyverse)
 library(ggplot2)
 ```
 
-# Setup  (Optional)
+## Setup  
 
-## Download R  
+### Download R  
 Download R (free software environment for statistical computing & graphics)  
 https://cran.cnr.berkeley.edu  
+
 ![](Figures/cran-download-r.png)
 
-## Download RStudio  
+### Download RStudio  
 RStudio Desktop is a powerful user interface for R.  
+
 https://www.rstudio.com/products/rstudio/download/#download
 ![](Figures/rstudio-desktop.png)
 
 In your `Downloads` folder, click on the RStudio .dmg you just downloaded. Then double-click the RStudio icon.  
 
+### Download Files  
+Click on "clone or download", then "download zip." Then unpack the zip file. 
+![](Figures/download-from-github.png)  
+
+### Open up the files 
+Click on "project" in the upper right corner. Then "New Project."  
+![](Figures/new-project.png)    
+
+Click on "Existing Directory" & doub-click on the "intro-data-wrangling" file.
+![](Figures/create-project.png)  
+
+
+
 # Introduction
 Data is everywhere! And making sense of data is a great skill to help us make sense of the world around us.  
-![](https://media.makeameme.org/created/data-data-everywhere-jb416t.jpg) Your phone counts how many steps you take and shows you your physical activity patterns. Netflix collects your viewing behaviors as datapoints and recommends you new movies to watch based on similar users. 
+![](https://media.makeameme.org/created/data-data-everywhere-jb416t.jpg)  
+Your phone counts how many steps you take and shows you your physical activity patterns. Netflix collects your viewing behaviors as datapoints and recommends you new movies to watch based on similar users. 
 
 But before you can try to make sense of data, you have to confront the reality that data, like life, is messy. A recent NY Times article claimed that 50-80% of a data analysis project can be spent just getting your data into a format you can use-- sorting it, simplifying it, cleaning it up, creating variables, changing the format, etc. That's why we're here to practice today!  
 
@@ -42,7 +58,7 @@ Fortunately, this process of __data wrangling__ is much easier with R. In partic
 - `mutate`: lets you create a new variable  
 - `arrange`: sorts your data set by a particular variable
 
-You can find this document online at (https://github.com/melcrow/RLadies/blob/master/Data_Wrangling.md).
+You can find this document online at (https://github.com/fbchow/intro-data-wrangling/blob/master/Data_Wrangling.md).  
 
 A useful resource for this is the RStudio Data Wrangling cheatsheet, which you can find online at (https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf). 
 
@@ -53,7 +69,7 @@ You may also find the examples in Chapter 3 of [Exploratory Data Analysis with R
 Let's start by installing some very useful packages. In your console, type:
 
 ```{r, eval = FALSE}
-install.packages("dplyr")
+install.packages("tidyverse")
 ```
 
 #### Setup: Loading packages
@@ -63,7 +79,7 @@ Now that we've installed the packages we need, we have to load them into R. This
 Start by creating a new script in RStudio. Then type the following code and run it:
 
 ```{r, eval = FALSE}
-library(dplyr)
+library(tidyverse)
 ```
 
 Great! We are ready to get started. Let's get some data.
@@ -85,7 +101,7 @@ Which country is the happiest country in each region of hte world? Which has the
 Let's try answering these questions using the HappyPlanetIndex data set. 
 
 ```{r}
-happy_planet <- read.csv("http://www.lock5stat.com/datasets/HappyPlanetIndex.csv")
+happy_planet <- read_csv("http://www.lock5stat.com/datasets/HappyPlanetIndex.csv")
 ```
 
 What does this data look like? Can we use this data to answer the questions above?

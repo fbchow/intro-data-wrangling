@@ -3,9 +3,11 @@ Intro to Data Wrangling
 Dr. Melissa Crow, Fanny Chow
 4/28/2019
 
--   [Setup (Optional)](#setup-optional)
+-   [Setup](#setup)
     -   [Download R](#download-r)
     -   [Download RStudio](#download-rstudio)
+    -   [Download Files](#download-files)
+    -   [Open up the files](#open-up-the-files)
 -   [Introduction](#introduction)
     -   [Setup: Installing packages](#setup-installing-packages)
     -   [Setup: Loading packages](#setup-loading-packages)
@@ -20,29 +22,42 @@ Dr. Melissa Crow, Fanny Chow
     -   [Conclusion](#conclusion)
     -   [Your turn](#your-turn)
 
-Setup (Optional)
-================
+Setup
+-----
 
-Download R
-----------
+### Download R
 
 Download R (free software environment for statistical computing & graphics)
 <https://cran.cnr.berkeley.edu>
+
 ![](Figures/cran-download-r.png)
 
-Download RStudio
-----------------
+### Download RStudio
 
 RStudio Desktop is a powerful user interface for R.
+
 <https://www.rstudio.com/products/rstudio/download/#download> ![](Figures/rstudio-desktop.png)
 
 In your `Downloads` folder, click on the RStudio .dmg you just downloaded. Then double-click the RStudio icon.
+
+### Download Files
+
+Click on "clone or download", then "download zip." Then unpack the zip file. ![](Figures/download-from-github.png)
+
+### Open up the files
+
+Click on "project" in the upper right corner. Then "New Project."
+![](Figures/new-project.png)
+
+Click on "Existing Directory" & doub-click on the "intro-data-wrangling" file.
+![](Figures/create-project.png)
 
 Introduction
 ============
 
 Data is everywhere! And making sense of data is a great skill to help us make sense of the world around us.
-![](https://media.makeameme.org/created/data-data-everywhere-jb416t.jpg) Your phone counts how many steps you take and shows you your physical activity patterns. Netflix collects your viewing behaviors as datapoints and recommends you new movies to watch based on similar users.
+![](https://media.makeameme.org/created/data-data-everywhere-jb416t.jpg)
+Your phone counts how many steps you take and shows you your physical activity patterns. Netflix collects your viewing behaviors as datapoints and recommends you new movies to watch based on similar users.
 
 But before you can try to make sense of data, you have to confront the reality that data, like life, is messy. A recent NY Times article claimed that 50-80% of a data analysis project can be spent just getting your data into a format you can use-- sorting it, simplifying it, cleaning it up, creating variables, changing the format, etc. That's why we're here to practice today!
 
@@ -55,7 +70,7 @@ Fortunately, this process of **data wrangling** is much easier with R. In partic
 -   `mutate`: lets you create a new variable
 -   `arrange`: sorts your data set by a particular variable
 
-You can find this document online at (<https://github.com/melcrow/RLadies/blob/master/Data_Wrangling.md>).
+You can find this document online at (<https://github.com/fbchow/intro-data-wrangling/blob/master/Data_Wrangling.md>).
 
 A useful resource for this is the RStudio Data Wrangling cheatsheet, which you can find online at (<https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf>).
 
@@ -66,8 +81,7 @@ You may also find the examples in Chapter 3 of [Exploratory Data Analysis with R
 Let's start by installing some very useful packages. In your console, type:
 
 ``` r
-install.packages("dplyr")
-install.packages("mosaic")
+install.packages("tidyverse")
 ```
 
 #### Setup: Loading packages
@@ -77,7 +91,7 @@ Now that we've installed the packages we need, we have to load them into R. This
 Start by creating a new script in RStudio. Then type the following code and run it:
 
 ``` r
-library(dplyr)
+library(tidyverse)
 ```
 
 Great! We are ready to get started. Let's get some data.
@@ -98,8 +112,23 @@ Which country is the happiest country in each region of hte world? Which has the
 Let's try answering these questions using the HappyPlanetIndex data set.
 
 ``` r
-happy_planet <- read.csv("http://www.lock5stat.com/datasets/HappyPlanetIndex.csv")
+happy_planet <- read_csv("http://www.lock5stat.com/datasets/HappyPlanetIndex.csv")
 ```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   Country = col_character(),
+    ##   Region = col_double(),
+    ##   Happiness = col_double(),
+    ##   LifeExpectancy = col_double(),
+    ##   Footprint = col_double(),
+    ##   HLY = col_double(),
+    ##   HPI = col_double(),
+    ##   HPIRank = col_double(),
+    ##   GDPperCapita = col_double(),
+    ##   HDI = col_double(),
+    ##   Population = col_double()
+    ## )
 
 What does this data look like? Can we use this data to answer the questions above?
 
@@ -119,20 +148,16 @@ There are several ways to deal with this. First, we could just print out the fir
 head(happy_planet)
 ```
 
-    ##     Country Region Happiness LifeExpectancy Footprint  HLY   HPI HPIRank
-    ## 1   Albania      7       5.5           76.2       2.2 41.7 47.91      54
-    ## 2   Algeria      3       5.6           71.7       1.7 40.1 51.23      40
-    ## 3    Angola      4       4.3           41.7       0.9 17.8 26.78     130
-    ## 4 Argentina      1       7.1           74.8       2.5 53.4 58.95      15
-    ## 5   Armenia      7       5.0           71.7       1.4 36.1 48.28      48
-    ## 6 Australia      2       7.9           80.9       7.8 63.7 36.64     102
-    ##   GDPperCapita   HDI Population
-    ## 1         5316 0.801       3.15
-    ## 2         7062 0.733      32.85
-    ## 3         2335 0.446      16.10
-    ## 4        14280 0.869      38.75
-    ## 5         4945 0.775       3.02
-    ## 6        31794 0.962      20.40
+    ## # A tibble: 6 x 11
+    ##   Country Region Happiness LifeExpectancy Footprint   HLY   HPI HPIRank
+    ##   <chr>    <dbl>     <dbl>          <dbl>     <dbl> <dbl> <dbl>   <dbl>
+    ## 1 Albania      7       5.5           76.2       2.2  41.7  47.9      54
+    ## 2 Algeria      3       5.6           71.7       1.7  40.1  51.2      40
+    ## 3 Angola       4       4.3           41.7       0.9  17.8  26.8     130
+    ## 4 Argent…      1       7.1           74.8       2.5  53.4  59.0      15
+    ## 5 Armenia      7       5             71.7       1.4  36.1  48.3      48
+    ## 6 Austra…      2       7.9           80.9       7.8  63.7  36.6     102
+    ## # … with 3 more variables: GDPperCapita <dbl>, HDI <dbl>, Population <dbl>
 
 But that's still quite messy because we have 11 variables.
 
@@ -148,18 +173,32 @@ We can learn more about the structure of the data:
 str(happy_planet)
 ```
 
-    ## 'data.frame':    143 obs. of  11 variables:
-    ##  $ Country       : Factor w/ 143 levels "Albania","Algeria",..: 1 2 3 4 5 6 7 8 9 10 ...
-    ##  $ Region        : int  7 3 4 1 7 2 2 7 5 7 ...
+    ## Classes 'spec_tbl_df', 'tbl_df', 'tbl' and 'data.frame': 143 obs. of  11 variables:
+    ##  $ Country       : chr  "Albania" "Algeria" "Angola" "Argentina" ...
+    ##  $ Region        : num  7 3 4 1 7 2 2 7 5 7 ...
     ##  $ Happiness     : num  5.5 5.6 4.3 7.1 5 7.9 7.8 5.3 5.3 5.8 ...
     ##  $ LifeExpectancy: num  76.2 71.7 41.7 74.8 71.7 80.9 79.4 67.1 63.1 68.7 ...
     ##  $ Footprint     : num  2.2 1.7 0.9 2.5 1.4 7.8 5 2.2 0.6 3.9 ...
     ##  $ HLY           : num  41.7 40.1 17.8 53.4 36.1 63.7 61.9 35.4 33.1 40.1 ...
     ##  $ HPI           : num  47.9 51.2 26.8 59 48.3 ...
-    ##  $ HPIRank       : int  54 40 130 15 48 102 57 85 31 104 ...
-    ##  $ GDPperCapita  : int  5316 7062 2335 14280 4945 31794 33700 5016 2053 7918 ...
+    ##  $ HPIRank       : num  54 40 130 15 48 102 57 85 31 104 ...
+    ##  $ GDPperCapita  : num  5316 7062 2335 14280 4945 ...
     ##  $ HDI           : num  0.801 0.733 0.446 0.869 0.775 0.962 0.948 0.746 0.547 0.804 ...
     ##  $ Population    : num  3.15 32.85 16.1 38.75 3.02 ...
+    ##  - attr(*, "spec")=
+    ##   .. cols(
+    ##   ..   Country = col_character(),
+    ##   ..   Region = col_double(),
+    ##   ..   Happiness = col_double(),
+    ##   ..   LifeExpectancy = col_double(),
+    ##   ..   Footprint = col_double(),
+    ##   ..   HLY = col_double(),
+    ##   ..   HPI = col_double(),
+    ##   ..   HPIRank = col_double(),
+    ##   ..   GDPperCapita = col_double(),
+    ##   ..   HDI = col_double(),
+    ##   ..   Population = col_double()
+    ##   .. )
 
 If we have questions about it in more detail, we can view the data documentation at (<http://happyplanetindex.org/about#how>).
 
@@ -193,12 +232,14 @@ happy_small <- happy_planet %>%
 head(happy_small)
 ```
 
-    ##     Country Region Happiness
-    ## 1   Albania      7       5.5
-    ## 2   Algeria      3       5.6
-    ## 3    Angola      4       4.3
+    ## # A tibble: 6 x 3
+    ##   Country   Region Happiness
+    ##   <chr>      <dbl>     <dbl>
+    ## 1 Albania        7       5.5
+    ## 2 Algeria        3       5.6
+    ## 3 Angola         4       4.3
     ## 4 Argentina      1       7.1
-    ## 5   Armenia      7       5.0
+    ## 5 Armenia        7       5  
     ## 6 Australia      2       7.9
 
 Focusing on certain cases: filter()
@@ -213,13 +254,15 @@ happy2 <- happy_small %>%
 head(happy2)
 ```
 
-    ##     Country Region Happiness
+    ## # A tibble: 6 x 3
+    ##   Country   Region Happiness
+    ##   <chr>      <dbl>     <dbl>
     ## 1 Australia      2       7.9
-    ## 2   Austria      2       7.8
-    ## 3   Belgium      2       7.6
-    ## 4    Canada      2       8.0
-    ## 5    Cyprus      2       7.2
-    ## 6   Denmark      2       8.1
+    ## 2 Austria        2       7.8
+    ## 3 Belgium        2       7.6
+    ## 4 Canada         2       8  
+    ## 5 Cyprus         2       7.2
+    ## 6 Denmark        2       8.1
 
 Note that we had to use `==` instead of just `=`. This is because `=` would set the entire variable region equal to 2 instead of just checking to see which countries were in region 2.
 
@@ -230,28 +273,20 @@ happy2 %>%
   filter(Happiness > 7)
 ```
 
-    ##                     Country Region Happiness
-    ## 1                 Australia      2       7.9
-    ## 2                   Austria      2       7.8
-    ## 3                   Belgium      2       7.6
-    ## 4                    Canada      2       8.0
-    ## 5                    Cyprus      2       7.2
-    ## 6                   Denmark      2       8.1
-    ## 7                   Finland      2       8.0
-    ## 8                    France      2       7.1
-    ## 9                   Germany      2       7.2
-    ## 10                  Iceland      2       7.8
-    ## 11                  Ireland      2       8.1
-    ## 12               Luxembourg      2       7.7
-    ## 13                    Malta      2       7.1
-    ## 14              Netherlands      2       7.7
-    ## 15              New Zealand      2       7.8
-    ## 16                   Norway      2       8.1
-    ## 17                    Spain      2       7.6
-    ## 18                   Sweden      2       7.9
-    ## 19              Switzerland      2       7.7
-    ## 20           United Kingdom      2       7.4
-    ## 21 United States of America      2       7.9
+    ## # A tibble: 21 x 3
+    ##    Country   Region Happiness
+    ##    <chr>      <dbl>     <dbl>
+    ##  1 Australia      2       7.9
+    ##  2 Austria        2       7.8
+    ##  3 Belgium        2       7.6
+    ##  4 Canada         2       8  
+    ##  5 Cyprus         2       7.2
+    ##  6 Denmark        2       8.1
+    ##  7 Finland        2       8  
+    ##  8 France         2       7.1
+    ##  9 Germany        2       7.2
+    ## 10 Iceland        2       7.8
+    ## # … with 11 more rows
 
 You can also use filter to find specific cases in a large data set:
 
@@ -260,9 +295,11 @@ happy2 %>%
   filter( Country %in% c("Australia", "Canada", "United States of America"))
 ```
 
-    ##                    Country Region Happiness
-    ## 1                Australia      2       7.9
-    ## 2                   Canada      2       8.0
+    ## # A tibble: 3 x 3
+    ##   Country                  Region Happiness
+    ##   <chr>                     <dbl>     <dbl>
+    ## 1 Australia                     2       7.9
+    ## 2 Canada                        2       8  
     ## 3 United States of America      2       7.9
 
 Creating new variables: mutate()
@@ -279,13 +316,15 @@ happy3 <- happy %>%
 head(happy3)
 ```
 
-    ##     Country Region Happiness GDPperCapita Population TotalGDP
-    ## 1   Albania      7       5.5         5316       3.15  16745.4
-    ## 2   Algeria      3       5.6         7062      32.85 231986.7
-    ## 3    Angola      4       4.3         2335      16.10  37593.5
-    ## 4 Argentina      1       7.1        14280      38.75 553350.0
-    ## 5   Armenia      7       5.0         4945       3.02  14933.9
-    ## 6 Australia      2       7.9        31794      20.40 648597.6
+    ## # A tibble: 6 x 6
+    ##   Country   Region Happiness GDPperCapita Population TotalGDP
+    ##   <chr>      <dbl>     <dbl>        <dbl>      <dbl>    <dbl>
+    ## 1 Albania        7       5.5         5316       3.15   16745.
+    ## 2 Algeria        3       5.6         7062      32.8   231987.
+    ## 3 Angola         4       4.3         2335      16.1    37594.
+    ## 4 Argentina      1       7.1        14280      38.8   553350 
+    ## 5 Armenia        7       5           4945       3.02   14934.
+    ## 6 Australia      2       7.9        31794      20.4   648598.
 
 This gives us the total GDP for each country in millions of dollars.
 
@@ -305,13 +344,15 @@ happy4 <- happy3 %>%
 head(happy4)
 ```
 
-    ##      Country Region Happiness GDPperCapita Population  TotalGDP
-    ## 1 Costa Rica      1       8.5        10180       4.33   44079.4
-    ## 2    Denmark      2       8.1        33973       5.42  184133.7
-    ## 3    Ireland      2       8.1        38505       4.16  160180.8
-    ## 4     Norway      2       8.1        41420       4.62  191360.4
-    ## 5     Canada      2       8.0        33375      32.31 1078346.2
-    ## 6    Finland      2       8.0        32153       5.25  168803.2
+    ## # A tibble: 6 x 6
+    ##   Country    Region Happiness GDPperCapita Population TotalGDP
+    ##   <chr>       <dbl>     <dbl>        <dbl>      <dbl>    <dbl>
+    ## 1 Costa Rica      1       8.5        10180       4.33   44079.
+    ## 2 Denmark         2       8.1        33973       5.42  184134.
+    ## 3 Ireland         2       8.1        38505       4.16  160181.
+    ## 4 Norway          2       8.1        41420       4.62  191360.
+    ## 5 Canada          2       8          33375      32.3  1078346.
+    ## 6 Finland         2       8          32153       5.25  168803.
 
 ``` r
 happy5 <- happy3 %>%
@@ -321,13 +362,15 @@ happy5 <- happy3 %>%
 head(happy5)
 ```
 
-    ##                    Country TotalGDP Happiness
-    ## 1 United States of America 12420804       7.9
-    ## 2                    China  8814506       6.7
-    ## 3                    Japan  3994985       6.8
-    ## 4                    India  3778490       5.5
-    ## 5                  Germany  2429649       7.2
-    ## 6           United Kingdom  2001925       7.4
+    ## # A tibble: 6 x 3
+    ##   Country                   TotalGDP Happiness
+    ##   <chr>                        <dbl>     <dbl>
+    ## 1 United States of America 12420804.       7.9
+    ## 2 China                     8814506.       6.7
+    ## 3 Japan                     3994985.       6.8
+    ## 4 India                     3778490.       5.5
+    ## 5 Germany                   2429649.       7.2
+    ## 6 United Kingdom            2001925.       7.4
 
 Grouped summaries: group\_by() and summarize()
 ----------------------------------------------
@@ -346,7 +389,7 @@ happy_planet %>%
 
     ## # A tibble: 7 x 2
     ##   Region AverageHappy
-    ##    <int>        <dbl>
+    ##    <dbl>        <dbl>
     ## 1      1         6.91
     ## 2      2         7.55
     ## 3      3         5.99
@@ -376,13 +419,15 @@ happy_final <- happy_planet %>%
 head(happy_final)
 ```
 
-    ##     Country  TotalGDP Happiness
-    ## 1   Denmark  184133.7       8.1
-    ## 2   Ireland  160180.8       8.1
-    ## 3    Norway  191360.4       8.1
-    ## 4    Canada 1078346.2       8.0
-    ## 5   Finland  168803.2       8.0
-    ## 6 Australia  648597.6       7.9
+    ## # A tibble: 6 x 3
+    ##   Country   TotalGDP Happiness
+    ##   <chr>        <dbl>     <dbl>
+    ## 1 Denmark    184134.       8.1
+    ## 2 Ireland    160181.       8.1
+    ## 3 Norway     191360.       8.1
+    ## 4 Canada    1078346.       8  
+    ## 5 Finland    168803.       8  
+    ## 6 Australia  648598.       7.9
 
 Conclusion
 ----------
