@@ -7,7 +7,6 @@ Dr. Melissa Crow, Fanny Chow
     -   [Download R](#download-r)
     -   [Download RStudio](#download-rstudio)
     -   [Download Files](#download-files)
-    -   [Open up the files](#open-up-the-files)
 -   [Introduction](#introduction)
     -   [Setup: Installing packages](#setup-installing-packages)
     -   [Setup: Loading packages](#setup-loading-packages)
@@ -42,15 +41,15 @@ In your `Downloads` folder, click on the RStudio .dmg you just downloaded. Then 
 
 ### Download Files
 
-Click on "clone or download", then "download zip." Then unpack the zip file. ![](Figures/download-from-github.png)
+In the "Console" below, type:
 
-### Open up the files
+``` r
+install.packages("usethis")
+library(usethis)
+use_course("https://bit.ly/2DEdbkG")
+```
 
-Click on "project" in the upper right corner. Then "New Project."
-![](Figures/new-project.png)
-
-Click on "Existing Directory" & doub-click on the "intro-data-wrangling" file.
-![](Figures/create-project.png)
+The command should copy to to your Desktop and ask you if you prefer a different location. Type `destdir` to have the lesson downloaded onto your desktop directory. Then type the number that corresponds to "Yup" or "Yes." You can choose to delete the ZIP file by typing the number for "Yup." Now you should have the intro-data-wranling project opened up!
 
 Introduction
 ============

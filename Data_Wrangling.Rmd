@@ -10,7 +10,6 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
-library(ggplot2)
 ```
 
 ## Setup  
@@ -30,16 +29,14 @@ https://www.rstudio.com/products/rstudio/download/#download
 In your `Downloads` folder, click on the RStudio .dmg you just downloaded. Then double-click the RStudio icon.  
 
 ### Download Files  
-Click on "clone or download", then "download zip." Then unpack the zip file. 
-![](Figures/download-from-github.png)  
+In the "Console" below, type:  
+```{r, eval=FALSE}
+install.packages("usethis")
+library(usethis)
+use_course("https://bit.ly/2DEdbkG")
+```
 
-### Open up the files 
-Click on "project" in the upper right corner. Then "New Project."  
-![](Figures/new-project.png)    
-
-Click on "Existing Directory" & doub-click on the "intro-data-wrangling" file.
-![](Figures/create-project.png)  
-
+The command should copy to to your Desktop and ask you if you prefer a different location. Type `destdir` to have the lesson downloaded onto your desktop directory. Then type the number that corresponds to "Yup" or "Yes." You can choose to delete the ZIP file by typing the number for "Yup." Now you should have the intro-data-wranling project opened up! We will be working mostly out of the `Data_Wrangling.Rmd` file.  
 
 
 # Introduction
