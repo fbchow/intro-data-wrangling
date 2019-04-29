@@ -41,21 +41,22 @@ In your `Downloads` folder, click on the RStudio .dmg you just downloaded. Then 
 
 ### Download Files
 
-In the "Console" below, type:
+Once you have RStudio opened up, in the "Console" below, type:
 
 ``` r
 install.packages("usethis")
 library(usethis)
-use_course("https://bit.ly/2DEdbkG")
+use_course("https://github.com/fbchow/intro-data-wrangling/archive/master.zip")
 ```
 
-The command should copy to to your Desktop and ask you if you prefer a different location. Type `destdir` to have the lesson downloaded onto your desktop directory. Then type the number that corresponds to "Yup" or "Yes." You can choose to delete the ZIP file by typing the number for "Yup." Now you should have the intro-data-wranling project opened up!
+The command should copy to to your Desktop and ask you if you prefer a different location. Type `destdir` to have the lesson downloaded onto your desktop directory. Then type the number that corresponds to "Yup" or "Yes." You can choose to delete the ZIP file by typing the number for "Yup." Now you should have the intro-data-wrangling project opened up! We will be working mostly out of the `Data_Wrangling.Rmd` file.
 
 Introduction
 ============
 
 Data is everywhere! And making sense of data is a great skill to help us make sense of the world around us.
 ![](https://media.makeameme.org/created/data-data-everywhere-jb416t.jpg)
+
 Your phone counts how many steps you take and shows you your physical activity patterns. Netflix collects your viewing behaviors as datapoints and recommends you new movies to watch based on similar users.
 
 But before you can try to make sense of data, you have to confront the reality that data, like life, is messy. A recent NY Times article claimed that 50-80% of a data analysis project can be spent just getting your data into a format you can use-- sorting it, simplifying it, cleaning it up, creating variables, changing the format, etc. That's why we're here to practice today!
